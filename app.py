@@ -30,6 +30,7 @@ def upload():
     idx = np.argmax(pred)
     stage = labels[idx]
     return jsonify({'stage': stage, 'ideal': ideal_params[stage]})
+    
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)
 
-if __name__ == "__main__":
-    app.run()
