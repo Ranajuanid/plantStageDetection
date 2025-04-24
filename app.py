@@ -3,23 +3,24 @@ from PIL import Image
 import io
 import numpy as np
 import tensorflow as tf
+import gdown
 import os
-import gdown  # Make sure gdown is installed: pip install gdown
 
-# === Download model if not present ===
-model_path = "plant_stage_model.h5"
-if not os.path.exists(model_path):
-    print("📥 Downloading model from Google Drive...")
-    url = "https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G"
-    gdown.download(url, model_path, quiet=False)
-
-# === Load model ===
-print("✅ Loading model...")
-model = tf.keras.models.load_model(model_path)
-
-# === App setup ===
 app = Flask(__name__)
 
+# Model download setup
+url = 'https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G'
+model_path = 'plant_stage_model.h5'
+
+# Check if the model exists, if not, download it
+if not os.path.exists(model_path):
+    print("📥 Downloading model from Google Drive...")
+    gdown.download(url, model_path, quiet=False)
+
+# Load the model
+model = tf.keras.models.load_model(model_path)
+
+# Labels and ideal parameters for plant stages
 labels = ['seedling', 'vegetative', 'flowering', 'germination', 'fruiting']
 ideal_params = {
     'seedling': {'temp': 24, 'humidity': 80},
@@ -29,6 +30,7 @@ ideal_params = {
     'fruiting': {'temp': 34, 'humidity': 68}
 }
 
+# Preprocessing function for the input image
 def preprocess(img_bytes):
     img = Image.open(io.BytesIO(img_bytes)).resize((128, 128))
     img = np.array(img) / 255.0
@@ -36,6 +38,7 @@ def preprocess(img_bytes):
         img = img[..., :3]
     return np.expand_dims(img, axis=0)
 
+# Upload route to handle image prediction
 @app.route("/upload", methods=['POST'])
 def upload():
     try:
@@ -48,5 +51,6 @@ def upload():
         print("❌ ERROR:", str(e))
         return jsonify({'error': str(e)}), 500
 
+# Running the app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
