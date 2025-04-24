@@ -7,7 +7,7 @@ import tensorflow as tf
 app = Flask(__name__)
 model = tf.keras.models.load_model("plant_stage_model.h5")
 
-labels = ['seedling', 'vegetative', 'flowering','germination','fruiting']
+labels = ['seedling', 'vegetative', 'flowering', 'germination', 'fruiting']
 ideal_params = {
     'seedling': {'temp': 24, 'humidity': 80},
     'vegetative': {'temp': 28, 'humidity': 70},
@@ -25,12 +25,15 @@ def preprocess(img_bytes):
 
 @app.route("/upload", methods=['POST'])
 def upload():
-    img = preprocess(request.data)
-    pred = model.predict(img)
-    idx = np.argmax(pred)
-    stage = labels[idx]
-    return jsonify({'stage': stage, 'ideal': ideal_params[stage]})
-    
+    try:
+        img = preprocess(request.data)
+        pred = model.predict(img)
+        idx = np.argmax(pred)
+        stage = labels[idx]
+        return jsonify({'stage': stage, 'ideal': ideal_params[stage]})
+    except Exception as e:
+        print("❌ ERROR:", str(e))
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
-
