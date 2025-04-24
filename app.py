@@ -3,9 +3,22 @@ from PIL import Image
 import io
 import numpy as np
 import tensorflow as tf
+import os
+import gdown  # Make sure gdown is installed: pip install gdown
 
+# === Download model if not present ===
+model_path = "plant_stage_model.h5"
+if not os.path.exists(model_path):
+    print("📥 Downloading model from Google Drive...")
+    url = "https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G"
+    gdown.download(url, model_path, quiet=False)
+
+# === Load model ===
+print("✅ Loading model...")
+model = tf.keras.models.load_model(model_path)
+
+# === App setup ===
 app = Flask(__name__)
-model = tf.keras.models.load_model("plant_stage_model.h5")
 
 labels = ['seedling', 'vegetative', 'flowering', 'germination', 'fruiting']
 ideal_params = {
