@@ -67,8 +67,7 @@ app = Flask(__name__)
 
 # Model URLs
 url1 = 'https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G'  # plant stages detection
-url2 = 'https://drive.google.com/uc?id=1dsQ_bQFj5eYPVSfr9rqAtvCBngl9a1Ow'  # plant disease detection
-model_path_stages = 'plant_stage_model.h5'
+url2 = 'https://drive.google.com/uc?id=1Zrmcp8D2bKiIGEppVuBt1HTUXk_xb6wX'  # plant disease detectionhttps
 model_path_diseases = 'Plant_Disease_model.h5'
 
 # Download models if not present
@@ -93,29 +92,29 @@ ideal_params = {
 }
 
 labels_diseases = [
-    'Tomato___Bacterial_spot',
-    'Tomato___Early_blight',
-    'Tomato___Late_blight',
-    'Tomato___Leaf_Mold',
-    'Tomato___Septoria_leaf_spot',
-    'Tomato___Spider_mites Two-spotted_spider_mite',
-    'Tomato___Target_Spot',
-    'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
-    'Tomato___Tomato_mosaic_virus',
-    'Tomato___healthy'
+ 'Bacterial-spot',
+ 'Early-blight',
+ 'Healthy',
+ 'Late-blight',
+ 'Leaf-mold',
+ 'Mosaic-virus',
+ 'Septoria-leaf-spot',
+ 'Yellow-leaf-curl-virus'
 ]
 
 disease_alert = {
-    'Tomato___Bacterial_spot': {'Unhealthy': 1},
-    'Tomato___Early_blight': {'Unhealthy': 1},
-    'Tomato___Late_blight': {'Unhealthy': 1},
-    'Tomato___Leaf_Mold': {'Unhealthy': 1},
-    'Tomato___Septoria_leaf_spot': {'Unhealthy': 1},
+    'Bacterial_spot': {'Unhealthy': 1},
+    'Early_blight': {'Unhealthy': 1},
+    'Healthy': {'Healthy': 1}
+    'Late_blight': {'Unhealthy': 1},
+    'Leaf_Mold': {'Unhealthy': 1},
+    'Mosaic_virus': {'Unhealthy': 1},
+    'Septoria_leaf_spot': {'Unhealthy': 1},
     'Tomato___Spider_mites Two-spotted_spider_mite': {'Unhealthy': 1},
     'Tomato___Target_Spot': {'Unhealthy': 1},
-    'Tomato___Tomato_Yellow_Leaf_Curl_Virus': {'Unhealthy': 1},
-    'Tomato___Tomato_mosaic_virus': {'Unhealthy': 1},
-    'Tomato___healthy': {'Healthy': 1}
+    'Yellow_Leaf_Curl_Virus': {'Unhealthy': 1},
+
+    
 }
 
 # Store latest results
