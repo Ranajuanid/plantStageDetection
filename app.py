@@ -161,7 +161,7 @@ def upload():
 # Endpoint to get the latest results
 @app.route("/latest", methods=['GET'])
 def get_latest():
-    return jsonify({'stage': latest_result1, 'disease': latest_result2})
+    return jsonify({'stage': latest_result1}), jsonify({'disease': latest_result2})
 
 import os
 
