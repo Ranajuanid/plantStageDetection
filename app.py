@@ -67,16 +67,16 @@ app = Flask(__name__)
 
 # Model URLs
 # url1 = 'https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G'  # plant stages detection
-# url2 = 'https://drive.google.com/uc?id=1Zrmcp8D2bKiIGEppVuBt1HTUXk_xb6wX'  # plant disease detectionhttps
-# model_path_diseases = 'Plant_Disease_model.h5'
+url2 = 'https://drive.google.com/uc?id=1Zrmcp8D2bKiIGEppVuBt1HTUXk_xb6wX'  # plant disease detectionhttps
+model_path_diseases = 'Plant_Disease_model.h5'
 # model_path_stages = 'Plant_stage_model.h5'
 
 # Download models if not present
 # if not os.path.exists(model_path_stages):
 #     gdown.download(url1, model_path_stages, quiet=False)
 
-# if not os.path.exists(model_path_diseases):
-#     gdown.download(url2, model_path_diseases, quiet=False)
+if not os.path.exists(model_path_diseases):
+    gdown.download(url2, model_path_diseases, quiet=False)
 
 # Load models
 # model_stages = tf.keras.models.load_model(model_path_stages)
