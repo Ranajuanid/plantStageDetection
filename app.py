@@ -110,8 +110,6 @@ disease_alert = {
     'Leaf_Mold': {'Unhealthy': 1},
     'Mosaic_virus': {'Unhealthy': 1},
     'Septoria_leaf_spot': {'Unhealthy': 1},
-    'Tomato___Spider_mites Two-spotted_spider_mite': {'Unhealthy': 1},
-    'Tomato___Target_Spot': {'Unhealthy': 1},
     'Yellow_Leaf_Curl_Virus': {'Unhealthy': 1},
 
     
