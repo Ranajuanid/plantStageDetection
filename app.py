@@ -90,7 +90,7 @@ model_diseases = tf.keras.models.load_model(model_path_diseases)
 #     'flowering': {'temp': 30, 'humidity': 60},
 #     'germination': {'temp': 25, 'humidity': 74},
 #     'fruiting': {'temp': 34, 'humidity': 68}
-}
+# }
 
 labels_diseases = [
  'Bacterial-spot',
