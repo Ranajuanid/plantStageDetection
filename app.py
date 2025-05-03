@@ -67,7 +67,7 @@ app = Flask(__name__)
 
 # Model URLs
 # url1 = 'https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G'  # plant stages detection
-url2 = 'https://drive.google.com/file/d/1h-E75oCJlRnCZbEAQEhg7d1LhXuzympB/view?usp=sharing'  # plant disease detection
+url2 =   'https://drive.google.com/uc?id=1h-E75oCJlRnCZbEAQEhg7d1LhXuzympB'  # plant disease detection
 model_path_diseases = 'Plant_Disease_model.h5'
 # model_path_stages = 'Plant_stage_model.h5'
 
