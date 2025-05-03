@@ -66,31 +66,31 @@ import os
 app = Flask(__name__)
 
 # Model URLs
-# url1 = 'https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G'  # plant stages detection
+url1 = 'https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G'  # plant stages detection
 url2 =   'https://drive.google.com/uc?id=1h-E75oCJlRnCZbEAQEhg7d1LhXuzympB'  # plant disease detection
 model_path_diseases = 'Plant_Disease_model.h5'
-# model_path_stages = 'Plant_stage_model.h5'
+model_path_stages = 'Plant_stage_model.h5'
 
 # Download models if not present
-# if not os.path.exists(model_path_stages):
-#     gdown.download(url1, model_path_stages, quiet=False)
+if not os.path.exists(model_path_stages):
+    gdown.download(url1, model_path_stages, quiet=False)
 
 if not os.path.exists(model_path_diseases):
     gdown.download(url2, model_path_diseases, quiet=False)
 
 # Load models
-# model_stages = tf.keras.models.load_model(model_path_stages)
+model_stages = tf.keras.models.load_model(model_path_stages)
 model_diseases = tf.keras.models.load_model('Plant_Disease_model.h5')
 
 # Labels and mappings
-# labels_stages = ['seedling', 'vegetative', 'flowering', 'germination', 'fruiting']
-# ideal_params = {
-#     'seedling': {'temp': 24, 'humidity': 80},
-#     'vegetative': {'temp': 28, 'humidity': 70},
-#     'flowering': {'temp': 30, 'humidity': 60},
-#     'germination': {'temp': 25, 'humidity': 74},
-#     'fruiting': {'temp': 34, 'humidity': 68}
-# }
+labels_stages = ['seedling', 'vegetative', 'flowering', 'germination', 'fruiting']
+ideal_params = {
+    'seedling': {'temp': 24, 'humidity': 80},
+    'vegetative': {'temp': 28, 'humidity': 70},
+    'flowering': {'temp': 30, 'humidity': 60},
+    'germination': {'temp': 25, 'humidity': 74},
+    'fruiting': {'temp': 34, 'humidity': 68}
+}
 
 labels_diseases = [
  'Bacterial-spot',
@@ -117,7 +117,7 @@ disease_alert = {
 }
 
 # Store latest results
-# latest_result1 = {'stage': 'unknown', 'ideal': {'temp': 0, 'humidity': 0}}
+latest_result1 = {'stage': 'unknown', 'ideal': {'temp': 0, 'humidity': 0}}
 latest_result2 = {'Disease': 'unknown', 'Health_state': {'Healthy': 0, 'Unhealthy': 0}}
 
 # Preprocess image
@@ -135,12 +135,12 @@ def upload():
     try:
         img = preprocess(request.data)
 
-        # # Predict plant stage
-        # pred_stage = model_stages.predict(img)
-        # idx1 = np.argmax(pred_stage)
-        # stage = labels_stages[idx1]
-        # latest_result1 = {'stage': stage, 'ideal': ideal_params[stage]}
-        # print(f"✅ Stage: {stage} → {latest_result1['ideal']}")
+        # Predict plant stage
+        pred_stage = model_stages.predict(img)
+        idx1 = np.argmax(pred_stage)
+        stage = labels_stages[idx1]
+        latest_result1 = {'stage': stage, 'ideal': ideal_params[stage]}
+        print(f"✅ Stage: {stage} → {latest_result1['ideal']}")
 
         # Predict disease
         pred_disease = model_diseases.predict(img)
@@ -150,7 +150,7 @@ def upload():
         latest_result2 = {'Disease': disease, 'Health_state': health_state}
         print(f"✅ Disease: {disease} → {health_state}")
 
-        return jsonify({'disease': latest_result2})
+        return jsonify({'disease': latest_result2},{'stage':latest_result1})
 
     except Exception as e:
         print("❌ ERROR:", str(e))
@@ -159,7 +159,7 @@ def upload():
 # Endpoint to get the latest results
 @app.route("/latest", methods=['GET'])
 def get_latest():
-    return jsonify({'disease': latest_result2})
+    return jsonify({'disease': latest_result2},{'stage':latest_result1})
 
 import os
 
