@@ -164,7 +164,10 @@ def upload():
 def get_latest():
     return jsonify({'stage': latest_result1, 'disease': latest_result2})
 
+import os
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+    port = int(os.environ.get("PORT", 10000))  # default to 10000 if PORT not set
+    app.run(host='0.0.0.0', port=port)
 
 
