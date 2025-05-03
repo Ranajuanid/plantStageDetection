@@ -68,9 +68,8 @@ app = Flask(__name__)
 # Model URLs
 url1 = 'https://drive.google.com/uc?id=1JgyW-FKZ2rJtdwNez3y7ZhLMQtepDr3G'  # plant stages detection
 url2 = 'https://drive.google.com/uc?id=1dsQ_bQFj5eYPVSfr9rqAtvCBngl9a1Ow'  # plant disease detection
-
 model_path_stages = 'plant_stage_model.h5'
-model_path_diseases = 'plant_disease_model.h5'
+model_path_diseases = 'Plant_Disease_model.h5'
 
 # Download models if not present
 if not os.path.exists(model_path_stages):
