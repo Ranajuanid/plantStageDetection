@@ -72,24 +72,24 @@ model_path_diseases = 'Plant_Disease_model.h5'
 model_path_stages = 'Plant_stage_model.h5'
 
 # Download models if not present
-if not os.path.exists(model_path_stages):
-    gdown.download(url1, model_path_stages, quiet=False)
+# if not os.path.exists(model_path_stages):
+#     gdown.download(url1, model_path_stages, quiet=False)
 
 if not os.path.exists(model_path_diseases):
     gdown.download(url2, model_path_diseases, quiet=False)
 
 # Load models
-model_stages = tf.keras.models.load_model(model_path_stages)
+# model_stages = tf.keras.models.load_model(model_path_stages)
 model_diseases = tf.keras.models.load_model(model_path_diseases)
 
 # Labels and mappings
-labels_stages = ['seedling', 'vegetative', 'flowering', 'germination', 'fruiting']
-ideal_params = {
-    'seedling': {'temp': 24, 'humidity': 80},
-    'vegetative': {'temp': 28, 'humidity': 70},
-    'flowering': {'temp': 30, 'humidity': 60},
-    'germination': {'temp': 25, 'humidity': 74},
-    'fruiting': {'temp': 34, 'humidity': 68}
+# labels_stages = ['seedling', 'vegetative', 'flowering', 'germination', 'fruiting']
+# ideal_params = {
+#     'seedling': {'temp': 24, 'humidity': 80},
+#     'vegetative': {'temp': 28, 'humidity': 70},
+#     'flowering': {'temp': 30, 'humidity': 60},
+#     'germination': {'temp': 25, 'humidity': 74},
+#     'fruiting': {'temp': 34, 'humidity': 68}
 }
 
 labels_diseases = [
@@ -117,7 +117,7 @@ disease_alert = {
 }
 
 # Store latest results
-latest_result1 = {'stage': 'unknown', 'ideal': {'temp': 0, 'humidity': 0}}
+# latest_result1 = {'stage': 'unknown', 'ideal': {'temp': 0, 'humidity': 0}}
 latest_result2 = {'Disease': 'unknown', 'Health_state': {'Healthy': 0, 'Unhealthy': 0}}
 
 # Preprocess image
@@ -131,16 +131,16 @@ def preprocess(img_bytes):
 # Upload image for prediction
 @app.route("/upload", methods=['POST'])
 def upload():
-    global latest_result1, latest_result2
+    global latest_result2
     try:
         img = preprocess(request.data)
 
-        # Predict plant stage
-        pred_stage = model_stages.predict(img)
-        idx1 = np.argmax(pred_stage)
-        stage = labels_stages[idx1]
-        latest_result1 = {'stage': stage, 'ideal': ideal_params[stage]}
-        print(f"✅ Stage: {stage} → {latest_result1['ideal']}")
+        # # Predict plant stage
+        # pred_stage = model_stages.predict(img)
+        # idx1 = np.argmax(pred_stage)
+        # stage = labels_stages[idx1]
+        # latest_result1 = {'stage': stage, 'ideal': ideal_params[stage]}
+        # print(f"✅ Stage: {stage} → {latest_result1['ideal']}")
 
         # Predict disease
         pred_disease = model_diseases.predict(img)
@@ -150,7 +150,7 @@ def upload():
         latest_result2 = {'Disease': disease, 'Health_state': health_state}
         print(f"✅ Disease: {disease} → {health_state}")
 
-        return jsonify({'stage': latest_result1, 'disease': latest_result2})
+        return jsonify({'disease': latest_result2})
 
     except Exception as e:
         print("❌ ERROR:", str(e))
@@ -159,7 +159,7 @@ def upload():
 # Endpoint to get the latest results
 @app.route("/latest", methods=['GET'])
 def get_latest():
-    return jsonify({'stage': latest_result1}), jsonify({'disease': latest_result2})
+    return jsonify({'disease': latest_result2})
 
 import os
 
