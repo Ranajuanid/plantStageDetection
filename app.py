@@ -105,7 +105,7 @@ labels_diseases = [
 disease_alert = {
     'Bacterial_spot': {'Unhealthy': 1},
     'Early_blight': {'Unhealthy': 1},
-    'Healthy': {'Healthy': 1}
+    'Healthy': {'Healthy': 1},
     'Late_blight': {'Unhealthy': 1},
     'Leaf_Mold': {'Unhealthy': 1},
     'Mosaic_virus': {'Unhealthy': 1},
